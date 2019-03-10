@@ -26,11 +26,30 @@ const movies = [
 ];
 
 class App extends Component {
+  /* 컴포넌트 라이프사이클 */
+  // Render : componentWillMount() -> render() -> componentDidMount()
+  // Update : componentWillReceiveProps() -> shouldComponentUpdate() -> componenetWillUpdate() -> render() -> componentDidUpdate()
+
+  state = {
+    greeting: "Hello!"
+  };
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        greeting : 'Hello again!'
+      });
+    }, 2000);
+  }
+
   render() {
     return (
       <div className="App">
+        {this.state.greeting}
         {movies.map((movie, index) => {
-          return <Movie title={movie.title} poster={movie.poster} key={index} />;
+          return (
+            <Movie title={movie.title} poster={movie.poster} key={index} />
+          );
         })}
       </div>
     );
