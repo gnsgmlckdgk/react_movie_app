@@ -3,9 +3,8 @@ import "./App.css";
 import Movie from "./Movie";
 
 class App extends Component {
-  /* 컴포넌트 라이프사이클 */
-  // Render : componentWillMount() -> render() -> componentDidMount()
-  // Update : componentWillReceiveProps() -> shouldComponentUpdate() -> componenetWillUpdate() -> render() -> componentDidUpdate()
+  // Render: componentWillMount() -> render() -> componentDidMount()
+  // Update componentWillReceiveProps() -> shouldComponentUpdate() -> componentWillUpdate() -> render() -> componentDidUpdate()
 
   state = {};
 
@@ -18,14 +17,13 @@ class App extends Component {
       return (
         <Movie
           title={movie.title_english}
-          poster={movie.medium_cover_image}
+          poster={movie.large_cover_image}
           key={movie.id}
           genres={movie.genres}
           synopsis={movie.synopsis}
         />
       );
     });
-
     return movies;
   };
 
@@ -37,16 +35,19 @@ class App extends Component {
   };
 
   _callApi = () => {
-    return fetch("https://yts.am/api/v2/list_movies.json?sort_by=rating")
-      .then(result => result.json())
+    return fetch(
+      "https://yts.am/api/v2/list_movies.json?sort_by=download_count"
+    )
+      .then(potato => potato.json())
       .then(json => json.data.movies)
       .catch(err => console.log(err));
   };
 
   render() {
+    const { movies } = this.state;
     return (
-      <div className="App">
-        {this.state.movies ? this._renderMovies() : "Loading"}
+      <div className={movies ? "App" : "App--loading"}>
+        {movies ? this._renderMovies() : "Loading"}
       </div>
     );
   }
