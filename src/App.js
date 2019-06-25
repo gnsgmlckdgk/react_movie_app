@@ -34,13 +34,23 @@ class App extends Component {
     });
   };
 
-  _callApi = () => {
+  _callApi = () => {    
+    
+    return fetch(
+    "/yts.am"
+    )
+    .then(response => response.json())
+    .then(json => json.data.movies)
+    .catch(err => console.log(err));
+
+      /*
     return fetch(
       "https://yts.am/api/v2/list_movies.json?sort_by=download_count"
     )
       .then(potato => potato.json())
       .then(json => json.data.movies)
       .catch(err => console.log(err));
+      */
   };
 
   render() {
